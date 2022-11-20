@@ -1,7 +1,7 @@
 {
   "name": "kalkulator-zakat",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "next": "13.0.4",
@@ -24,3 +25,4 @@
     "tailwindcss": "^3.2.4"
   }
 }
+
