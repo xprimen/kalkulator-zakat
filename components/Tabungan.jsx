@@ -41,7 +41,7 @@ const Tabungan = ({ hargaEmas, loading, loader, persenZakat, nishabGram }) => {
       <div className="border-t border-gray-300">
         <div className="bg-white px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <label
-            htmlFor="penghasilan"
+            htmlFor="tabungan"
             className="text-sm font-medium text-gray-800"
           >
             Tabungan
@@ -69,7 +69,7 @@ const Tabungan = ({ hargaEmas, loading, loader, persenZakat, nishabGram }) => {
         <div className="bg-gray-100 px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <div className="flex flex-col">
             <label
-              htmlFor="penghasilan"
+              htmlFor="bunga"
               className="text-sm font-medium text-gray-800"
             >
               Bunga

@@ -41,7 +41,7 @@ const Emas = ({ hargaEmas, loading, loader, persenZakat, nishabGram }) => {
         <div className="bg-white px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <div className="flex flex-col">
             <label
-              htmlFor="penghasilan"
+              htmlFor="simpananEmas"
               className="text-sm font-medium text-gray-800"
             >
               Jumlah Emas
