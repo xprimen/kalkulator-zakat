@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
-import { formatCurrency, numberToString } from '../helpers';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { numberToString } from '../helpers';
 
 const Penghasilan = ({
   hargaEmas,

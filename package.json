@@ -1,6 +1,6 @@
 {
   "name": "kalkulator-zakat",
-  "version": "0.1.3",
+  "version": "1.0.0-alpha",
   "private": false,
   "scripts": {
     "dev": "next dev",

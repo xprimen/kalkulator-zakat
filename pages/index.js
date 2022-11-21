@@ -1,4 +1,3 @@
-import Cheerio from 'cheerio';
 import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
 import { GiGoldBar, GiPayMoney, GiReceiveMoney } from 'react-icons/gi';
@@ -47,7 +46,6 @@ const Home = () => {
     let callPage;
     switch (page) {
       case 'penghasilan':
-        // callPage = <Penghasilan harga={hargaEmas} />;
         callPage = (
           <Penghasilan
             hargaEmas={hargaEmas}
