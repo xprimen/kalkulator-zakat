@@ -15,7 +15,7 @@ const nishabGram = 85;
 
 // const Home = ({ hargaEmas }) => {
 const Home = () => {
-  const [page, setPage] = useState('perdagangan');
+  const [page, setPage] = useState('penghasilan');
   const [hargaEmas, setHargaEmas] = useState(0);
   const [loadingCheckHargaEmas, setLoadingCheckHargaEmas] = useState(false);
 
@@ -187,6 +187,15 @@ const Home = () => {
               Emas
             </span>
           </div>
+        </div>
+        <div className="bg-white">
+          {loadingCheckHargaEmas && (
+            <div className="px-4 py-1 sm:px-6">
+              <small className="text-amber-700">
+                Mohon Tunggu Sejenak. Sedang Memeriksa Harga Emas Hari ini.
+              </small>
+            </div>
+          )}
         </div>
         <div>{content()}</div>
       </main>

@@ -59,13 +59,6 @@ const Penghasilan = ({
 
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md">
-      {loading && (
-        <div className="px-4 py-1 sm:px-6">
-          <small className="text-amber-700">
-            Mohon Tunggu Sejenak. Sedang Memeriksa Harga Emas Hari ini.
-          </small>
-        </div>
-      )}
       <div className="px-4 py-5 sm:px-6">
         <div className="flex justify-start gap-6">
           <div className="flex item-center">
