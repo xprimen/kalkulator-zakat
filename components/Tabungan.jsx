@@ -7,7 +7,7 @@ const Tabungan = ({ hargaEmas, loading, loader, persenZakat, nishabGram }) => {
   const [tabungan, setTabungan] = useState(0);
   const [bunga, setBunga] = useState(0);
   const [showNote, setShowNote] = useState(true);
-  const [nishab, setNishab] = useState(hargaEmas * nishabGram);
+  const nishab = hargaEmas * nishabGram;
   const [totalZakat, setTotalZakat] = useState(0);
   const [info, setInfo] = useState('');
   const [color, setColor] = useState('text-red-500');
@@ -136,7 +136,6 @@ const Tabungan = ({ hargaEmas, loading, loader, persenZakat, nishabGram }) => {
               <li>
                 Nishab {nishabGram} gram per Tahun Rp {numberToString(nishab)}
               </li>
-              <li>Dianjurkan dipotong dari gaji bruto</li>
             </ul>
           )}
         </div>
