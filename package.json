@@ -1,6 +1,6 @@
 {
   "name": "kalkulator-zakat",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "scripts": {
     "dev": "next dev",
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/analytics": "^0.1.5",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "eslint": "8.28.0",
