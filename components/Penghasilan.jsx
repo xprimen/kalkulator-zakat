@@ -3,10 +3,13 @@ import CurrencyInput from 'react-currency-input-field';
 import { formatCurrency, numberToString } from '../helpers';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
-const Penghasilan = ({ hargaEmas, loading }) => {
-  // const Penghasilan = () => {
-  const persenZakat = 0.025;
-  const nishabGram = 85;
+const Penghasilan = ({
+  hargaEmas,
+  loading,
+  loader,
+  persenZakat,
+  nishabGram,
+}) => {
   const [penghasilan, setPenghasilan] = useState(0);
   const [pendapatanLain, setPendapatanLain] = useState(0);
   const [jenisPenghasilan, setJenisPenghasilan] = useState('perbulan');
@@ -23,14 +26,7 @@ const Penghasilan = ({ hargaEmas, loading }) => {
     } else {
       setNishab((hargaEmas * nishabGram) / 12);
     }
-  }, [hargaEmas, jenisPenghasilan]);
-
-  const loader = useCallback(
-    () => (
-      <div className="animate-pulse bg-slate-300 rounded-md sm:col-span-2 flex w-full h-8" />
-    ),
-    []
-  );
+  }, [hargaEmas, jenisPenghasilan, nishabGram]);
 
   const countTotalZakat = useCallback(() => {
     let totalCount = 0;
@@ -51,7 +47,7 @@ const Penghasilan = ({ hargaEmas, loading }) => {
       setTotalZakat(0);
       setInfo('');
     }
-  }, [nishab, pendapatanLain, pengeluaran, penghasilan]);
+  }, [nishab, pendapatanLain, pengeluaran, penghasilan, persenZakat]);
 
   useEffect(() => {
     changeJenisPenghasilan('perbulan');

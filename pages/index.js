@@ -1,6 +1,6 @@
 import Cheerio from 'cheerio';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { GiGoldBar, GiPayMoney, GiReceiveMoney } from 'react-icons/gi';
 import { MdOutlineStorefront } from 'react-icons/md';
 import Emas from '../components/Emas';
@@ -10,10 +10,12 @@ import Tabungan from '../components/Tabungan';
 
 const fkBlue = '#1100db';
 const fkGreen = '#648830';
+const persenZakat = 0.025;
+const nishabGram = 85;
 
 // const Home = ({ hargaEmas }) => {
 const Home = () => {
-  const [page, setPage] = useState('penghasilan');
+  const [page, setPage] = useState('emas');
   const [hargaEmas, setHargaEmas] = useState(0);
   const [loadingCheckHargaEmas, setLoadingCheckHargaEmas] = useState(false);
 
@@ -34,23 +36,52 @@ const Home = () => {
     checkHargaEmasHariIni();
   }, []);
 
+  const loader = useCallback(
+    () => (
+      <div className="animate-pulse bg-slate-300 rounded-md sm:col-span-2 flex w-full h-8" />
+    ),
+    []
+  );
+
   const content = () => {
     let callPage;
     switch (page) {
       case 'penghasilan':
         // callPage = <Penghasilan harga={hargaEmas} />;
         callPage = (
-          <Penghasilan hargaEmas={hargaEmas} loading={loadingCheckHargaEmas} />
+          <Penghasilan
+            hargaEmas={hargaEmas}
+            loading={loadingCheckHargaEmas}
+            loader={loader}
+            persenZakat={persenZakat}
+            nishabGram={nishabGram}
+          />
         );
         break;
       case 'tabungan':
-        callPage = <Tabungan />;
+        callPage = (
+          <Tabungan
+            hargaEmas={hargaEmas}
+            loading={loadingCheckHargaEmas}
+            loader={loader}
+            persenZakat={persenZakat}
+            nishabGram={nishabGram}
+          />
+        );
         break;
       case 'perdagangan':
         callPage = <Perdagangan />;
         break;
       case 'emas':
-        callPage = <Emas />;
+        callPage = (
+          <Emas
+            hargaEmas={hargaEmas}
+            loading={loadingCheckHargaEmas}
+            loader={loader}
+            persenZakat={persenZakat}
+            nishabGram={nishabGram}
+          />
+        );
         break;
 
       default:
