@@ -3,49 +3,59 @@ import CurrencyInput from 'react-currency-input-field';
 import { formatCurrency, numberToString } from '../helpers';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
-const Penghasilan = ({ harga }) => {
+const Penghasilan = ({ hargaEmas, loading }) => {
+  // const Penghasilan = () => {
   const persenZakat = 0.025;
   const nishabGram = 85;
   const [penghasilan, setPenghasilan] = useState(0);
   const [pendapatanLain, setPendapatanLain] = useState(0);
   const [jenisPenghasilan, setJenisPenghasilan] = useState('perbulan');
   const [pengeluaran, setPengeluaran] = useState(0);
-  const [showNote, setShowNote] = useState(false);
-  const [nishab, setNishab] = useState((harga * nishabGram) / 12);
+  const [showNote, setShowNote] = useState(true);
+  const [nishab, setNishab] = useState((hargaEmas * nishabGram) / 12);
   const [totalZakat, setTotalZakat] = useState(0);
   const [info, setInfo] = useState('');
   const [color, setColor] = useState('text-red-500');
 
-  const changeJenisPenghasilan = (val) => {
-    if (val === 'pertahun') {
-      setNishab(harga * nishabGram);
+  const changeJenisPenghasilan = useCallback(() => {
+    if (jenisPenghasilan === 'pertahun') {
+      setNishab(hargaEmas * nishabGram);
     } else {
-      setNishab((harga * nishabGram) / 12);
+      setNishab((hargaEmas * nishabGram) / 12);
     }
-    setJenisPenghasilan(val);
-  };
+  }, [hargaEmas, jenisPenghasilan]);
+
+  const loader = useCallback(
+    () => (
+      <div className="animate-pulse bg-slate-300 rounded-md sm:col-span-2 flex w-full h-8" />
+    ),
+    []
+  );
 
   const countTotalZakat = useCallback(() => {
-    if (String(penghasilan).length > 1) {
-      let totalCount = 0;
-      totalCount = penghasilan + pendapatanLain;
-      totalCount = totalCount - pengeluaran;
-      // console.log('totalCount :', totalCount);
-      let totalSetelahPersen = totalCount * persenZakat;
-      // console.log('totalSetelahPersen :', totalSetelahPersen);
-      totalSetelahPersen = parseInt(totalSetelahPersen, 10);
-      if (totalSetelahPersen > 0) {
-        setTotalZakat(totalSetelahPersen);
-        if (totalCount < nishab) {
-          setInfo('Tidak Wajib Membayar Zakat, Tapi Bisa Berinfak');
-          setColor('text-red-500');
-        } else {
-          setInfo('Wajib Membayar Zakat');
-          setColor('text-gray-800');
-        }
+    let totalCount = 0;
+    totalCount = penghasilan + pendapatanLain;
+    totalCount = totalCount - pengeluaran;
+    let totalSetelahPersen = totalCount * persenZakat;
+    totalSetelahPersen = parseInt(totalSetelahPersen, 10);
+    if (totalSetelahPersen > 0) {
+      setTotalZakat(totalSetelahPersen);
+      if (totalCount < nishab) {
+        setInfo('Tidak Wajib Membayar Zakat, Tapi Bisa Berinfak');
+        setColor('text-red-500');
+      } else {
+        setInfo('Wajib Membayar Zakat');
+        setColor('text-gray-800');
       }
+    } else {
+      setTotalZakat(0);
+      setInfo('');
     }
   }, [nishab, pendapatanLain, pengeluaran, penghasilan]);
+
+  useEffect(() => {
+    changeJenisPenghasilan('perbulan');
+  }, [changeJenisPenghasilan]);
 
   useEffect(() => {
     countTotalZakat();
@@ -53,8 +63,14 @@ const Penghasilan = ({ harga }) => {
 
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md">
+      {loading && (
+        <div className="px-4 py-1 sm:px-6">
+          <small className="text-amber-700">
+            Mohon Tunggu Sejenak. Sedang Memeriksa Harga Emas Hari ini.
+          </small>
+        </div>
+      )}
       <div className="px-4 py-5 sm:px-6">
-        {/* <div className="mt-1 max-w-2xl text-sm text-gray-800">Perbulan</div> */}
         <div className="flex justify-start gap-6">
           <div className="flex item-center">
             <input
@@ -63,7 +79,7 @@ const Penghasilan = ({ harga }) => {
               name="jenis-penghasilan"
               type="radio"
               defaultValue="perbulan"
-              onChange={(v) => changeJenisPenghasilan(v.target.value)}
+              onChange={(v) => setJenisPenghasilan(v.target.value)}
               className="h-4 w-4 border-gray-300 text-fkGreen focus:ring-fkGreen"
             />
             <label
@@ -79,7 +95,7 @@ const Penghasilan = ({ harga }) => {
               name="jenis-penghasilan"
               type="radio"
               defaultValue="pertahun"
-              onChange={(v) => changeJenisPenghasilan(v.target.value)}
+              onChange={(v) => setJenisPenghasilan(v.target.value)}
               className="h-4 w-4 border-gray-300 text-fkGreen focus:ring-fkGreen"
             />
             <label
@@ -99,16 +115,25 @@ const Penghasilan = ({ harga }) => {
           >
             Penghasilan
           </label>
-          <CurrencyInput
-            id="penghasilan"
-            name="penghasilan"
-            prefix="Rp "
-            defaultValue="0"
-            decimalSeparator=","
-            groupSeparator="."
-            onValueChange={(value, name) => setPenghasilan(Number(value))}
-            className="sm:col-span-2 flex w-full rounded-sm form-input py-1 border-gray-200 focus:border-gray-300 focus:ring-gray-200 text-sm text-gray-800"
-          />
+          {loading ? (
+            loader()
+          ) : (
+            <CurrencyInput
+              id="penghasilan"
+              name="penghasilan"
+              prefix="Rp "
+              defaultValue="0"
+              decimalSeparator=","
+              groupSeparator="."
+              value={penghasilan}
+              onValueChange={(value, name) =>
+                value === undefined
+                  ? setPenghasilan(0)
+                  : setPenghasilan(Number(value))
+              }
+              className="sm:col-span-2 flex w-full rounded-md form-input py-1 border-gray-200 focus:border-gray-300 focus:ring-gray-200 text-sm text-gray-800"
+            />
+          )}
         </div>
         <div className="bg-white px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <label
@@ -117,16 +142,25 @@ const Penghasilan = ({ harga }) => {
           >
             Pendapatan Lain
           </label>
-          <CurrencyInput
-            id="pendapatan-lain"
-            name="pendapatan-lain"
-            prefix="Rp "
-            defaultValue="0"
-            decimalSeparator=","
-            groupSeparator="."
-            onValueChange={(value, name) => setPendapatanLain(Number(value))}
-            className="sm:col-span-2 flex w-full rounded-sm form-input py-1 border-gray-200 focus:border-gray-300 focus:ring-gray-200 text-sm text-gray-800"
-          />
+          {loading ? (
+            loader()
+          ) : (
+            <CurrencyInput
+              id="pendapatan-lain"
+              name="pendapatan-lain"
+              prefix="Rp "
+              defaultValue="0"
+              decimalSeparator=","
+              groupSeparator="."
+              value={pendapatanLain}
+              onValueChange={(value, name) =>
+                value === undefined
+                  ? setPendapatanLain(0)
+                  : setPendapatanLain(Number(value))
+              }
+              className="sm:col-span-2 flex w-full rounded-md form-input py-1 border-gray-200 focus:border-gray-300 focus:ring-gray-200 text-sm text-gray-800"
+            />
+          )}
         </div>
         <div className="bg-gray-100 px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <div className="flex flex-col">
@@ -140,16 +174,25 @@ const Penghasilan = ({ harga }) => {
               Kebutuhan pokok (termasuk hutang jatuh tempo)
             </small>
           </div>
-          <CurrencyInput
-            id="pengeluaran"
-            name="pengeluaran"
-            prefix="Rp "
-            defaultValue="0"
-            decimalSeparator=","
-            groupSeparator="."
-            onValueChange={(value, name) => setPengeluaran(Number(value))}
-            className="sm:col-span-2 flex w-full rounded-sm form-input py-1 border-gray-200 focus:border-gray-300 focus:ring-gray-200 text-sm text-gray-800"
-          />
+          {loading ? (
+            loader()
+          ) : (
+            <CurrencyInput
+              id="pengeluaran"
+              name="pengeluaran"
+              prefix="Rp "
+              defaultValue="0"
+              decimalSeparator=","
+              groupSeparator="."
+              value={pengeluaran}
+              onValueChange={(value, name) =>
+                value === undefined
+                  ? setPengeluaran(0)
+                  : setPengeluaran(Number(value))
+              }
+              className="sm:col-span-2 flex w-full rounded-md form-input py-1 border-gray-200 focus:border-gray-300 focus:ring-gray-200 text-sm text-gray-800"
+            />
+          )}
         </div>
         <div className="bg-white px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <label
@@ -163,7 +206,14 @@ const Penghasilan = ({ harga }) => {
           </h1>
         </div>
         <div className="bg-gray-100 px-4 py-4 items-start text-xs text-gray-800">
-          <h1 className={'text-lg font-medium mb-2 ' + color}>{info}</h1>
+          <h1
+            className={
+              'text-lg font-medium mb-2 transition duration-700 ease-in-out ' +
+              color
+            }
+          >
+            {info}
+          </h1>
           <div
             className="flex justify-between cursor-pointer"
             onClick={() => setShowNote(!showNote)}
@@ -178,7 +228,7 @@ const Penghasilan = ({ harga }) => {
                 emas
               </li>
               <li>
-                Harga emas per gram saat ini Rp {numberToString(harga)}{' '}
+                Harga emas per gram saat ini Rp {numberToString(hargaEmas)}{' '}
                 (www.logammulia.com)
               </li>
               <li>

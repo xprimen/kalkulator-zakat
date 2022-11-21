@@ -11,13 +11,37 @@ import Tabungan from '../components/Tabungan';
 const fkBlue = '#1100db';
 const fkGreen = '#648830';
 
-const Home = ({ hargaEmas }) => {
+// const Home = ({ hargaEmas }) => {
+const Home = () => {
   const [page, setPage] = useState('penghasilan');
+  const [hargaEmas, setHargaEmas] = useState(0);
+  const [loadingCheckHargaEmas, setLoadingCheckHargaEmas] = useState(false);
+
+  const checkHargaEmasHariIni = async () => {
+    setLoadingCheckHargaEmas(true);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // body: JSON.stringify({ title: 'React POST Request Example' })
+    };
+    const getHarga = await fetch('./api/get-harga-emas', requestOptions);
+    const { harga } = await getHarga.json();
+    setHargaEmas(harga);
+    setLoadingCheckHargaEmas(false);
+  };
+
+  useEffect(() => {
+    checkHargaEmasHariIni();
+  }, []);
+
   const content = () => {
     let callPage;
     switch (page) {
       case 'penghasilan':
-        callPage = <Penghasilan harga={hargaEmas} />;
+        // callPage = <Penghasilan harga={hargaEmas} />;
+        callPage = (
+          <Penghasilan hargaEmas={hargaEmas} loading={loadingCheckHargaEmas} />
+        );
         break;
       case 'tabungan':
         callPage = <Tabungan />;
@@ -130,14 +154,14 @@ const Home = ({ hargaEmas }) => {
 
 export default Home;
 
-export async function getServerSideProps(context) {
-  /* const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    // body: JSON.stringify({ title: 'React POST Request Example' })
-  };
-  const getHarga = await fetch('/api/get-harga-emas', requestOptions);
-  const { harga } = await getHarga.json(); */
+/* export async function getServerSideProps(context) {
+  // const requestOptions = {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   // body: JSON.stringify({ title: 'React POST Request Example' })
+  // };
+  // const getHarga = await fetch('/api/get-harga-emas', requestOptions);
+  // const { harga } = await getHarga.json();
 
   const response = await fetch(
     `https://www.logammulia.com/id/harga-emas-hari-ini`
@@ -159,5 +183,5 @@ export async function getServerSideProps(context) {
       hargaEmas: harga,
     },
   };
-}
+} */
 
