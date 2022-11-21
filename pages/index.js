@@ -70,6 +70,7 @@ const Home = () => {
           content="Alat untuk membantu menghitung Zakat yang akan Anda keluarkan"
         />
         <link rel="icon" href="/icon.png" />
+        <link rel="canonical" href="https://kalkulator-zakat-fk.vercel.app" />
       </Head>
 
       <main className="container mx-auto max-w-[520px] bg-white">
@@ -87,13 +88,13 @@ const Home = () => {
                 fontSize={32}
               />
             </button>
-            <h1
+            <span
               className={
                 'text-sm ' + (page === 'penghasilan' ? 'text-fkBlue' : '')
               }
             >
               Penghasilan
-            </h1>
+            </span>
           </div>
           <div className="flex flex-col">
             <button
@@ -105,13 +106,13 @@ const Home = () => {
                 fontSize={32}
               />
             </button>
-            <h1
+            <span
               className={
                 'text-sm ' + (page === 'tabungan' ? 'text-fkBlue' : '')
               }
             >
               Tabungan
-            </h1>
+            </span>
           </div>
           <div className="flex flex-col">
             <button
@@ -123,13 +124,13 @@ const Home = () => {
                 fontSize={32}
               />
             </button>
-            <h1
+            <span
               className={
                 'text-sm ' + (page === 'perdagangan' ? 'text-fkBlue' : '')
               }
             >
               Perdagangan
-            </h1>
+            </span>
           </div>
           <div className="flex flex-col">
             <button
@@ -141,9 +142,11 @@ const Home = () => {
                 fontSize={32}
               />
             </button>
-            <h1 className={'text-sm ' + (page === 'emas' ? 'text-fkBlue' : '')}>
+            <span
+              className={'text-sm ' + (page === 'emas' ? 'text-fkBlue' : '')}
+            >
               Emas
-            </h1>
+            </span>
           </div>
         </div>
         <div>{content()}</div>

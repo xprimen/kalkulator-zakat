@@ -201,24 +201,24 @@ const Penghasilan = ({ hargaEmas, loading }) => {
           >
             Total
           </label>
-          <h1 className="font-medium text-gray-800">
+          <h3 className="font-medium text-gray-800">
             Rp {numberToString(totalZakat)}
-          </h1>
+          </h3>
         </div>
         <div className="bg-gray-100 px-4 py-4 items-start text-xs text-gray-800">
-          <h1
+          <h2
             className={
               'text-lg font-medium mb-2 transition duration-700 ease-in-out ' +
               color
             }
           >
             {info}
-          </h1>
+          </h2>
           <div
             className="flex justify-between cursor-pointer"
             onClick={() => setShowNote(!showNote)}
           >
-            <h1>Note:</h1>
+            <span>Note:</span>
             {showNote ? <FiChevronUp /> : <FiChevronDown />}
           </div>
           {showNote && (
