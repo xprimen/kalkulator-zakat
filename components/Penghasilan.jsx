@@ -160,7 +160,7 @@ const Penghasilan = ({
               Pengeluaran
             </label>
             <small className="text-xs text-gray-400">
-              Kebutuhan pokok (termasuk hutang jatuh tempo)
+              Kebutuhan pokok (termasuk utang jatuh tempo)
             </small>
           </div>
           {loading ? (
