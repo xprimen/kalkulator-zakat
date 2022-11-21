@@ -15,7 +15,7 @@ const nishabGram = 85;
 
 // const Home = ({ hargaEmas }) => {
 const Home = () => {
-  const [page, setPage] = useState('emas');
+  const [page, setPage] = useState('perdagangan');
   const [hargaEmas, setHargaEmas] = useState(0);
   const [loadingCheckHargaEmas, setLoadingCheckHargaEmas] = useState(false);
 
@@ -70,7 +70,15 @@ const Home = () => {
         );
         break;
       case 'perdagangan':
-        callPage = <Perdagangan />;
+        callPage = (
+          <Perdagangan
+            hargaEmas={hargaEmas}
+            loading={loadingCheckHargaEmas}
+            loader={loader}
+            persenZakat={persenZakat}
+            nishabGram={nishabGram}
+          />
+        );
         break;
       case 'emas':
         callPage = (
