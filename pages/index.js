@@ -99,7 +99,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-gray-50 max-h-screen h-screen">
+    <div className="bg-white max-h-screen h-screen">
       <Head>
         <title>Kalkulator Zakat Fatwa Kehidupan</title>
         <meta
