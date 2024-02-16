@@ -1,31 +1,31 @@
-import Head from 'next/head';
-import { useCallback, useEffect, useState } from 'react';
-import { GiGoldBar, GiPayMoney, GiReceiveMoney } from 'react-icons/gi';
-import { MdOutlineStorefront } from 'react-icons/md';
-import Emas from '../components/Emas';
-import Penghasilan from '../components/Penghasilan';
-import Perdagangan from '../components/Perdagangan';
-import Tabungan from '../components/Tabungan';
+import Head from "next/head";
+import { useCallback, useEffect, useState } from "react";
+import { GiGoldBar, GiPayMoney, GiReceiveMoney } from "react-icons/gi";
+import { MdOutlineStorefront } from "react-icons/md";
+import Emas from "../components/Emas";
+import Penghasilan from "../components/Penghasilan";
+import Perdagangan from "../components/Perdagangan";
+import Tabungan from "../components/Tabungan";
 
-const fkBlue = '#1100db';
-const fkGreen = '#648830';
+const fkBlue = "#1100db";
+const fkGreen = "#648830";
 const persenZakat = 0.025;
 const nishabGram = 85;
 
 // const Home = ({ hargaEmas }) => {
 const Home = () => {
-  const [page, setPage] = useState('penghasilan');
+  const [page, setPage] = useState("penghasilan");
   const [hargaEmas, setHargaEmas] = useState(0);
   const [loadingCheckHargaEmas, setLoadingCheckHargaEmas] = useState(false);
 
   const checkHargaEmasHariIni = async () => {
     setLoadingCheckHargaEmas(true);
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       // body: JSON.stringify({ title: 'React POST Request Example' })
     };
-    const getHarga = await fetch('./api/get-harga-emas', requestOptions);
+    const getHarga = await fetch("/api/get-harga-emas", requestOptions);
     const { harga } = await getHarga.json();
     setHargaEmas(harga);
     setLoadingCheckHargaEmas(false);
@@ -45,7 +45,7 @@ const Home = () => {
   const content = () => {
     let callPage;
     switch (page) {
-      case 'penghasilan':
+      case "penghasilan":
         callPage = (
           <Penghasilan
             hargaEmas={hargaEmas}
@@ -56,7 +56,7 @@ const Home = () => {
           />
         );
         break;
-      case 'tabungan':
+      case "tabungan":
         callPage = (
           <Tabungan
             hargaEmas={hargaEmas}
@@ -67,7 +67,7 @@ const Home = () => {
           />
         );
         break;
-      case 'perdagangan':
+      case "perdagangan":
         callPage = (
           <Perdagangan
             hargaEmas={hargaEmas}
@@ -78,7 +78,7 @@ const Home = () => {
           />
         );
         break;
-      case 'emas':
+      case "emas":
         callPage = (
           <Emas
             hargaEmas={hargaEmas}
@@ -117,17 +117,17 @@ const Home = () => {
         <div className="flex bg-gray-100 justify-evenly gap-4 py-4">
           <div className="flex flex-col">
             <button
-              onClick={() => setPage('penghasilan')}
+              onClick={() => setPage("penghasilan")}
               className="self-center"
             >
               <GiPayMoney
-                color={page === 'penghasilan' ? fkBlue : fkGreen}
+                color={page === "penghasilan" ? fkBlue : fkGreen}
                 fontSize={32}
               />
             </button>
             <span
               className={
-                'text-sm ' + (page === 'penghasilan' ? 'text-fkBlue' : '')
+                "text-sm " + (page === "penghasilan" ? "text-fkBlue" : "")
               }
             >
               Penghasilan
@@ -135,17 +135,17 @@ const Home = () => {
           </div>
           <div className="flex flex-col">
             <button
-              onClick={() => setPage('tabungan')}
+              onClick={() => setPage("tabungan")}
               className="w-full justify-center flex"
             >
               <GiReceiveMoney
-                color={page === 'tabungan' ? fkBlue : fkGreen}
+                color={page === "tabungan" ? fkBlue : fkGreen}
                 fontSize={32}
               />
             </button>
             <span
               className={
-                'text-sm ' + (page === 'tabungan' ? 'text-fkBlue' : '')
+                "text-sm " + (page === "tabungan" ? "text-fkBlue" : "")
               }
             >
               Tabungan
@@ -153,17 +153,17 @@ const Home = () => {
           </div>
           <div className="flex flex-col">
             <button
-              onClick={() => setPage('perdagangan')}
+              onClick={() => setPage("perdagangan")}
               className="w-full justify-center flex"
             >
               <MdOutlineStorefront
-                color={page === 'perdagangan' ? fkBlue : fkGreen}
+                color={page === "perdagangan" ? fkBlue : fkGreen}
                 fontSize={32}
               />
             </button>
             <span
               className={
-                'text-sm ' + (page === 'perdagangan' ? 'text-fkBlue' : '')
+                "text-sm " + (page === "perdagangan" ? "text-fkBlue" : "")
               }
             >
               Perdagangan
@@ -171,16 +171,16 @@ const Home = () => {
           </div>
           <div className="flex flex-col">
             <button
-              onClick={() => setPage('emas')}
+              onClick={() => setPage("emas")}
               className="w-full justify-center flex"
             >
               <GiGoldBar
-                color={page === 'emas' ? fkBlue : fkGreen}
+                color={page === "emas" ? fkBlue : fkGreen}
                 fontSize={32}
               />
             </button>
             <span
-              className={'text-sm ' + (page === 'emas' ? 'text-fkBlue' : '')}
+              className={"text-sm " + (page === "emas" ? "text-fkBlue" : "")}
             >
               Emas
             </span>
@@ -233,4 +233,3 @@ export default Home;
     },
   };
 } */
-

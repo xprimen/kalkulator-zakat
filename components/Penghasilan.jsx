@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import CurrencyInput from 'react-currency-input-field';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { numberToString } from '../helpers';
+import React, { useCallback, useEffect, useState } from "react";
+import CurrencyInput from "react-currency-input-field";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { numberToString } from "../helpers";
 
 const Penghasilan = ({
   hargaEmas,
@@ -12,16 +12,16 @@ const Penghasilan = ({
 }) => {
   const [penghasilan, setPenghasilan] = useState(0);
   const [pendapatanLain, setPendapatanLain] = useState(0);
-  const [jenisPenghasilan, setJenisPenghasilan] = useState('perbulan');
+  const [jenisPenghasilan, setJenisPenghasilan] = useState("perbulan");
   const [pengeluaran, setPengeluaran] = useState(0);
   const [showNote, setShowNote] = useState(true);
   const [nishab, setNishab] = useState((hargaEmas * nishabGram) / 12);
   const [totalZakat, setTotalZakat] = useState(0);
-  const [info, setInfo] = useState('');
-  const [color, setColor] = useState('text-red-500');
+  const [info, setInfo] = useState("");
+  const [color, setColor] = useState("text-red-500");
 
   const changeJenisPenghasilan = useCallback(() => {
-    if (jenisPenghasilan === 'pertahun') {
+    if (jenisPenghasilan === "pertahun") {
       setNishab(hargaEmas * nishabGram);
     } else {
       setNishab((hargaEmas * nishabGram) / 12);
@@ -37,20 +37,20 @@ const Penghasilan = ({
     if (totalSetelahPersen > 0) {
       setTotalZakat(totalSetelahPersen);
       if (totalCount < nishab) {
-        setInfo('Tidak Wajib Membayar Zakat, Tapi Bisa Berinfak');
-        setColor('text-red-500');
+        setInfo("Tidak Wajib Membayar Zakat, Tapi Bisa Berinfak");
+        setColor("text-red-500");
       } else {
-        setInfo('Wajib Membayar Zakat');
-        setColor('text-gray-800');
+        setInfo("Wajib Membayar Zakat");
+        setColor("text-gray-800");
       }
     } else {
       setTotalZakat(0);
-      setInfo('');
+      setInfo("");
     }
   }, [nishab, pendapatanLain, pengeluaran, penghasilan, persenZakat]);
 
   useEffect(() => {
-    changeJenisPenghasilan('perbulan');
+    changeJenisPenghasilan("perbulan");
   }, [changeJenisPenghasilan]);
 
   useEffect(() => {
@@ -197,7 +197,7 @@ const Penghasilan = ({
         <div className="bg-gray-100 px-4 py-4 items-start text-xs text-gray-800">
           <h2
             className={
-              'text-lg font-medium mb-2 transition duration-700 ease-in-out ' +
+              "text-lg font-medium mb-2 transition duration-700 ease-in-out " +
               color
             }
           >
@@ -217,13 +217,13 @@ const Penghasilan = ({
                 emas
               </li>
               <li>
-                Harga emas per gram saat ini Rp {numberToString(hargaEmas)}{' '}
+                Harga emas per gram saat ini Rp {numberToString(hargaEmas)}{" "}
                 (www.logammulia.com)
               </li>
               <li>
-                Nishab {nishabGram} gram per{' '}
-                {jenisPenghasilan === 'pertahun' ? 'Tahun' : 'Bulan'} Rp{' '}
-                {numberToString(nishab)}
+                Nishab {nishabGram} gram per{" "}
+                {jenisPenghasilan === "pertahun" ? "Tahun" : "Bulan"} Rp{" "}
+                {numberToString(Math.round(nishab))}
               </li>
               <li>Dianjurkan dipotong dari gaji bruto</li>
             </ul>
