@@ -1,9 +1,9 @@
-const cheerio = require('cheerio');
-const Cors = require('cors');
+const cheerio = require("cheerio");
+const Cors = require("cors");
 
 // Initializing the cors middleware
 const cors = Cors({
-  methods: ['POST'],
+  methods: ["POST"],
 });
 
 // Helper method to wait for a middleware to execute before continuing
@@ -22,7 +22,7 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
   await runMiddleware(req, res, cors);
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     try {
       // 4
       const response = await fetch(
@@ -35,9 +35,10 @@ export default async function handler(req, res) {
         `body > section.section-padding.n-no-padding-top > div > div:nth-child(5) > div > div.right > div > div:nth-child(1) > span.value > span.text`
       ).each((i, d) => {
         harga = $(d).text();
-        harga = harga.split(',')[0];
-        harga = harga.replace('.', '');
-        harga = parseInt(harga.replace('Rp', ''), 10);
+        harga = harga.split(",")[0];
+        harga = harga.replace(".", "");
+        harga = harga.replace(".", "");
+        harga = parseInt(harga.replace("Rp", ""), 10);
       });
       res.statusCode = 200;
       return res.json({ harga });
@@ -51,7 +52,6 @@ export default async function handler(req, res) {
 
     // res.status(200).json({ method: req.method });
   } else {
-    res.status(404).json({ message: 'Not Found' });
+    res.status(404).json({ message: "Not Found" });
   }
 }
-
