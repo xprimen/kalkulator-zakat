@@ -1,15 +1,16 @@
-export const numberToString = (number) => {
-  if (!number) {
-    return null;
-  }
-  const number_string = number.toString(),
-    divided = number_string.length % 3;
-  let numbering = number_string.substr(0, divided),
-    thousanf = number_string.substr(divided).match(/\d{3}/g);
+export const numberToString = (number, rounded = 0) => {
+  number = number.toFixed(rounded);
+  const number_string = number.toString();
+  const [integerString, decimalString] = number_string.split('.');
+  console.log(integerString, decimalString);
+  const divided = integerString.length % 3;
+  let numbering = integerString.substr(0, divided),
+    thousanf = integerString.substr(divided).match(/\d{3}/g);
 
   if (thousanf) {
-    const separator = divided ? "." : "";
-    numbering += separator + thousanf.join(".");
+    const separator = divided ? '.' : '';
+    numbering += separator + thousanf.join('.');
+    numbering = rounded > 0 ? numbering + ',' + decimalString : numbering;
     return numbering;
   }
 
@@ -18,7 +19,7 @@ export const numberToString = (number) => {
 
 export const formatNumber = (n) => {
   // format number 1000000 to 1,234,567
-  return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return n.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 
 export const formatCurrency = (input_val, blur) => {
@@ -26,7 +27,7 @@ export const formatCurrency = (input_val, blur) => {
   // and puts cursor back in right position.
 
   // don't validate empty input
-  if (input_val === "") {
+  if (input_val === '') {
     return;
   }
 
@@ -34,11 +35,11 @@ export const formatCurrency = (input_val, blur) => {
   var original_len = input_val.length;
 
   // check for decimal
-  if (input_val.indexOf(",") >= 0) {
+  if (input_val.indexOf(',') >= 0) {
     // get position of first decimal
     // this prevents multiple decimals from
     // being entered
-    var decimal_pos = input_val.indexOf(",");
+    var decimal_pos = input_val.indexOf(',');
 
     // split number by decimal point
     var left_side = input_val.substring(0, decimal_pos);
@@ -51,25 +52,25 @@ export const formatCurrency = (input_val, blur) => {
     right_side = formatNumber(right_side);
 
     // On blur make sure 2 numbers after decimal
-    if (blur === "blur") {
-      right_side += "00";
+    if (blur === 'blur') {
+      right_side += '00';
     }
 
     // Limit decimal to only 2 digits
     right_side = right_side.substring(0, 2);
 
     // join number by .
-    input_val = "Rp " + left_side + "," + right_side;
+    input_val = 'Rp ' + left_side + ',' + right_side;
   } else {
     // no decimal entered
     // add commas to number
     // remove all non-digits
     input_val = formatNumber(input_val);
-    input_val = "Rp " + input_val;
+    input_val = 'Rp ' + input_val;
 
     // final formatting
-    if (blur === "blur") {
-      input_val += ",00";
+    if (blur === 'blur') {
+      input_val += ',00';
     }
   }
 
